@@ -76,7 +76,7 @@ export default function SearchScreen() {
           <Text style={tw`text-white font-semibold ml-1 mb-2`}>
             Results ({results.length})
           </Text>
-          <View style={tw`flex-row justify-between flex-wrap px-3`}>
+          <View style={tw`flex-row justify-between flex-wrap`}>
             {results.map((item, index) => {
               return (
                 <TouchableWithoutFeedback

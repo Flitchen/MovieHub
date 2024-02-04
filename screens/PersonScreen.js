@@ -23,6 +23,7 @@ import {
 } from "../api/moviedb";
 import { useDispatch, useSelector } from "react-redux";
 import { addCast, removeCast, selectCasts } from "../slices/favouriteCastSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 var { width, height } = Dimensions.get("window");
 export default function PersonScreen() {
   const { params: item } = useRoute();
@@ -32,16 +33,37 @@ export default function PersonScreen() {
   const [person, setPerson] = useState({});
   const [loading, setLoading] = useState(true);
   const favouriteCasts = useSelector(selectCasts);
-  // console.log(favouriteCasts);
-  const handleFavourite = (person) => {
+  // console.log("favouriteCasts: ", favouriteCasts);
+  const handleFavourite = async (person) => {
     const castDetails = {
       id: person.id,
       name: person.name,
       profile_path: person.profile_path,
     };
-    favouriteCasts?.some((cast) => cast.id === person.id)
-      ? dispatch(removeCast(castDetails))
-      : dispatch(addCast(castDetails));
+    try {
+      if (favouriteCasts?.some((cast) => cast.id === person.id)) {
+        const filteredCasts = favouriteCasts.filter(
+          (cast) => cast.id !== person.id
+        );
+        await AsyncStorage.setItem(
+          "Favourite-casts",
+          JSON.stringify(filteredCasts)
+        );
+        dispatch(removeCast(castDetails));
+      } else {
+        await AsyncStorage.setItem(
+          "Favourite-casts",
+          JSON.stringify([...favouriteCasts, castDetails])
+        );
+        dispatch(addCast(castDetails));
+      }
+    } catch (error) {
+      // console.log(error)
+    }
+
+    // favouriteCasts?.some((cast) => cast.id === person.id)
+    //   ? dispatch(removeCast(castDetails))
+    //   : dispatch(addCast(castDetails));
   };
 
   const navigation = useNavigation();

@@ -47,19 +47,19 @@ export default function SearchScreen() {
   return (
     <SafeAreaView style={tw`bg-neutral-800 flex-1`}>
       <View
-        style={tw`mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full`}
+        style={tw`mx-4 mt-2 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full`}
       >
         <TextInput
           onChangeText={handleTextDebounce}
           placeholder="Search Movie"
           placeholderTextColor={"lightgray"}
-          style={tw`pb-1 pl-6 flex-1 text-base font-semibold text-white tracking-wider`}
+          style={tw` pl-6 flex-1 text-base font-semibold text-white tracking-wider`}
         />
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("HomeScreen");
           }}
-          style={tw`rounded-full p-3 m-1 bg-neutral-500`}
+          style={tw`rounded-full p-2 m-1 bg-neutral-500`}
         >
           <XMarkIcon size={25} color="white" />
         </TouchableOpacity>
@@ -76,7 +76,7 @@ export default function SearchScreen() {
           <Text style={tw`text-white font-semibold ml-1 mb-2`}>
             Results ({results.length})
           </Text>
-          <View style={tw`flex-row justify-between flex-wrap`}>
+          <View style={tw`flex-row justify-between flex-wrap px-3`}>
             {results.map((item, index) => {
               return (
                 <TouchableWithoutFeedback

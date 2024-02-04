@@ -30,6 +30,7 @@ import {
   removeMovie,
   selectMovies,
 } from "../slices/favouriteMovieSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 var { width, height } = Dimensions.get("window");
 
 export default function MovieScreen() {
@@ -37,22 +38,40 @@ export default function MovieScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const favouriteMovies = useSelector(selectMovies);
-  // console.log(favouriteMovies);
+  // console.log("favouriteMovies: ", favouriteMovies);
   // let movieName = "Ant-Man and the Wasp: Quantamania";
   // const [isFavourite, setIsFavourite] = useState(false);
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState({});
-  const handleFavourite = (film) => {
+  const handleFavourite = async (film) => {
     const movieDetails = {
       id: film.id,
       title: film.title,
       poster_path: film.poster_path,
     };
-    favouriteMovies?.some((movie) => movie.id === film.id)
-      ? dispatch(removeMovie(movieDetails))
-      : dispatch(addMovie(movieDetails));
+    try {
+      if (favouriteMovies?.some((movie) => movie.id === film.id)) {
+        const filteredMovies = favouriteMovies.filter(
+          (movie) => movie.id !== film.id
+        );
+        dispatch(removeMovie(movieDetails));
+        await AsyncStorage.setItem("Favourite-movies", filteredMovies);
+      } else {
+        dispatch(addMovie(movieDetails));
+        await AsyncStorage.setItem(
+          "Favourite-movies",
+          JSON.stringify([...favouriteMovies, movieDetails])
+        );
+        const response = await AsyncStorage.getItem("Favourite-movies");
+        // console.log("response: ", response);
+      }
+    } catch (error) {}
+
+    // favouriteMovies?.some((movie) => movie.id === film.id)
+    //   ? dispatch(removeMovie(movieDetails))
+    //   : dispatch(addMovie(movieDetails));
   };
   const getMovieDetails = async (id) => {
     const data = await fetchMovieDetails(id);

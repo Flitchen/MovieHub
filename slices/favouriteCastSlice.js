@@ -9,6 +9,9 @@ export const favouriteCastSlice = createSlice({
     addCast: (state, action) => {
       state.casts = [...state.casts, action.payload];
     },
+    addCasts: (state, action) => {
+      state.casts = action.payload;
+    },
     removeCast: (state, action) => {
       let newCasts = [...state.casts];
       let castIndex = state.casts.findIndex(
@@ -25,7 +28,7 @@ export const favouriteCastSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addCast, removeCast } = favouriteCastSlice.actions;
+export const { addCast, addCasts, removeCast } = favouriteCastSlice.actions;
 
 export const selectCasts = (state) => state.favouriteCast.casts;
 

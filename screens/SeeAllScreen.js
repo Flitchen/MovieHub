@@ -41,7 +41,7 @@ export default function SeeAllScreen() {
         contentContainerStyle={{ paddingHorizontal: 15 }}
         style={tw`space-y-3`}
       >
-        <View style={tw`flex-row justify-between flex-wrap`}>
+        <View style={tw`flex-row justify-between flex-wrap px-3`}>
           {params?.data?.map((item, index) => {
             return (
               <TouchableWithoutFeedback

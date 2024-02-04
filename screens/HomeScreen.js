@@ -23,6 +23,10 @@ import {
   fetchTrendingMovies,
   fetchUpcomingMovies,
 } from "../api/moviedb";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { addCasts } from "../slices/favouriteCastSlice";
+import { addMovies } from "../slices/favouriteMovieSlice";
 
 // const ios = Platform.OS == "ios";
 export default function HomeScreen() {
@@ -30,6 +34,7 @@ export default function HomeScreen() {
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const getTrendingMovies = async () => {
     const data = await fetchTrendingMovies();
@@ -55,7 +60,35 @@ export default function HomeScreen() {
     }
     setLoading(false);
   };
+  const getStoredCasts = async () => {
+    try {
+      const response = await AsyncStorage.getItem("Favourite-casts");
+      console.log("cast response: ", response);
+      const newResponse = JSON.parse(response);
+      if (newResponse != null) {
+        dispatch(addCasts(newResponse));
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+  const getStoredMovies = async () => {
+    try {
+      const response = await AsyncStorage.getItem("Favourite-movies");
+      // console.log("movie response: ", response);
+      const newResponse = JSON.parse(response);
+      // console.log("new response: ", newResponse);
+      if (newResponse != null) {
+        dispatch(addMovies(newResponse));
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
   useEffect(() => {
+    getStoredCasts();
+    getStoredMovies();
     getTrendingMovies();
     getUpcomingMovies();
     getTopRatedMovies();
@@ -63,11 +96,11 @@ export default function HomeScreen() {
 
   return (
     <View style={tw`flex-1`}>
-      <SafeAreaView style={tw` ios:-mb-2 android:mb-3`}>
+      <SafeAreaView style={tw` ios:-mb-2 android:mb-3 mt-2`}>
         <StatusBar style="light" />
         <View style={tw`flex flex-row justify-between items-center mx-4`}>
           <Bars3CenterLeftIcon
-            size={30}
+            size={25}
             strokeWidth={2}
             color="white"
             onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
@@ -76,7 +109,7 @@ export default function HomeScreen() {
             <Text style={tw`text-[${styles.primary}]`}>M</Text>ovies
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
-            <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+            <MagnifyingGlassIcon size={25} strokeWidth={2} color="white" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>

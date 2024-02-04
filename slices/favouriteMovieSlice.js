@@ -9,6 +9,9 @@ export const favouriteMovieSlice = createSlice({
     addMovie: (state, action) => {
       state.movies = [...state.movies, action.payload];
     },
+    addMovies: (state, action) => {
+      state.movies = action.payload;
+    },
     removeMovie: (state, action) => {
       let newMovies = [...state.movies];
       let movieIndex = state.movies.findIndex(
@@ -25,7 +28,7 @@ export const favouriteMovieSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addMovie, removeMovie } = favouriteMovieSlice.actions;
+export const { addMovie, addMovies, removeMovie } = favouriteMovieSlice.actions;
 
 export const selectMovies = (state) => state.favouriteMovie.movies;
 

@@ -26,7 +26,7 @@ var { width, height } = Dimensions.get("window");
 export default function FavouriteCasts() {
   const navigation = useNavigation();
   const favouriteCasts = useSelector(selectCasts);
-  // console.log(favouriteCasts);
+  // console.log("favouriteCasts: ", favouriteCasts);
   return (
     <SafeAreaView style={tw`flex-1 bg-neutral-800 py-4`}>
       <View style={tw`flex flex-row items-center my-3 px-3`}>
@@ -44,7 +44,7 @@ export default function FavouriteCasts() {
         contentContainerStyle={{ paddingBottom: 20 }}
         showsVerticalScrollIndicator={false}
       >
-        <View style={tw`flex-row justify-between flex-wrap`}>
+        <View style={tw`flex-row justify-between flex-wrap px-3`}>
           {favouriteCasts?.length > 0 ? (
             favouriteCasts?.map((cast, index) => {
               return (

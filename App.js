@@ -24,7 +24,6 @@ const Drawer = createDrawerNavigator();
 const StackNavs = () => {
   return (
     <Stack.Navigator
-      // initialRouteName={"HomeScreen"}
       initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false,
@@ -50,6 +49,7 @@ export default function App() {
           screenOptions={{
             headerBackVisible: false,
             headerShown: false,
+            swipeEnabled: false,
             drawerLabelStyle: {
               marginLeft: -20,
             },

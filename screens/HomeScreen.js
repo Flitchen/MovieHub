@@ -63,7 +63,7 @@ export default function HomeScreen() {
   const getStoredCasts = async () => {
     try {
       const response = await AsyncStorage.getItem("Favourite-casts");
-      console.log("cast response: ", response);
+      // console.log("cast response: ", response);
       const newResponse = JSON.parse(response);
       if (newResponse != null) {
         dispatch(addCasts(newResponse));

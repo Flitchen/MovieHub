@@ -57,7 +57,10 @@ export default function MovieScreen() {
           (movie) => movie.id !== film.id
         );
         dispatch(removeMovie(movieDetails));
-        await AsyncStorage.setItem("Favourite-movies", filteredMovies);
+        await AsyncStorage.setItem(
+          "Favourite-movies",
+          JSON.stringify([...filteredMovies])
+        );
       } else {
         dispatch(addMovie(movieDetails));
         await AsyncStorage.setItem(

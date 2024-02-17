@@ -45,9 +45,10 @@ export default function PersonScreen() {
         const filteredCasts = favouriteCasts.filter(
           (cast) => cast.id !== person.id
         );
+
         await AsyncStorage.setItem(
           "Favourite-casts",
-          JSON.stringify(filteredCasts)
+          JSON.stringify([...filteredCasts])
         );
         dispatch(removeCast(castDetails));
       } else {

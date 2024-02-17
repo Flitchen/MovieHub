@@ -29,7 +29,7 @@ export default function FavouriteCasts() {
   // console.log("favouriteCasts: ", favouriteCasts);
   return (
     <SafeAreaView style={tw`flex-1 bg-neutral-800 py-4`}>
-      <View style={tw`flex flex-row items-center my-3 px-3`}>
+      <View style={tw`flex flex-row items-center my-6 px-3`}>
         <Bars3CenterLeftIcon
           size={30}
           strokeWidth={2}
